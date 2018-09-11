@@ -8,8 +8,6 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Random;
 
 public class SmallGame {
 
