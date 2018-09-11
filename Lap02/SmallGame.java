@@ -2,68 +2,66 @@ package snippet;
 
 import se.lth.cs.pt.square.Square;
 import se.lth.cs.pt.window.SimpleWindow;
-import java.util.Scanner;
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Random;
+
 
 public class SmallGame {
 
 	public static void main(String[] args) {
-		Scanner scan = new Scanner(System.in);
 		SimpleWindow w = new SimpleWindow(600, 600, "Drawing Window");
 		boolean xy = true;
+		// xy determine which player turn is it
 		boolean[] blockUesedArray = new boolean[9];
+		// keep track of the used cells in the game and find out if we got a draw
 		boolean[] Player1Array = new boolean[9];
+		// keep track of player 1 used cells and if p1 win
 		boolean[] Player2Array = new boolean[9];
 		int score1 = 0;
 		int score2 = 0;
+//		each player score 
 		initialize(w, blockUesedArray, Player1Array, Player2Array, score1, score2);
 
 		while (true) {
 
 			if (win(Player1Array)) {
-				score1 += 1;
 
+				// here we test if a game ended and we change the scores accordingly
+				score1 += 1;
 				w.moveTo(225, 175);
 				w.writeText("Congrats Player One wins!");
 				w.moveTo(225, 275);
 				w.writeText("click anywhere to continue..");
 				w.waitForMouseClick();
-
 				initialize(w, blockUesedArray, Player1Array, Player2Array, score1, score2);
 			} else if (win(Player2Array)) {
 				score2 += 1;
-
 				w.moveTo(225, 175);
 				w.writeText("Congrats Player Two wins!");
 				w.moveTo(225, 275);
 				w.writeText("click anywhere to continue..");
 				w.waitForMouseClick();
 				initialize(w, blockUesedArray, Player1Array, Player2Array, score1, score2);
-
 			} else if (allTrue(blockUesedArray)) {
 				w.moveTo(225, 175);
 				w.writeText("It's a drow!");
 				w.moveTo(225, 275);
 				w.writeText("click anywhere to continue..");
 				w.waitForMouseClick();
-
 				initialize(w, blockUesedArray, Player1Array, Player2Array, score1, score2);
-
 			}
+
 			w.waitForMouseClick();
 			int x = w.getMouseX();
 			int y = w.getMouseY();
-			// add stupid AI as next step
+			// adding a stupid AI as next step using random to select where AI want to play
 			// Random rand = new Random();
-			// int guess = rand.nextInt(9);
+			// int aIGuess = rand.nextInt(9);
+			
+			
+			//I divided the frame into 9 smaller areas, each with a code name f1 , f2 ...respectively
+			// player draw x in position f1
 			if (x >= 0 && x < 200 && y > 0 && y < 200 && !blockUesedArray[0]) {
-				// player draw x in position f1
 				f1(xy, w);
 				blockUesedArray[0] = true;
 				if (xy) {
@@ -158,25 +156,29 @@ public class SmallGame {
 
 	}
 
-	public static void currentTime() {
-
-		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-		System.out.println(sdf.format(cal.getTime()));
-
-	}
-
-	static boolean win(boolean[] x) {
-		if (x[0] && x[4] && x[8] || x[2] && x[4] && x[6] || x[0] && x[1] && x[2] || x[3] && x[4] && x[5]
-				|| x[6] && x[7] && x[8] || x[0] && x[3] && x[6] || x[1] && x[4] && x[7] || x[2] && x[5] && x[8]) {
+	static boolean win(boolean[] x) 
+	{
+//		/here we check the boolean array for each player to see if he got a win case	
+		if (   x[0] && x[4] && x[8] 
+			|| x[2] && x[4] && x[6] 
+			|| x[0] && x[1] && x[2] 
+			|| x[3] && x[4] && x[5]
+			|| x[6] && x[7] && x[8] 
+			|| x[0] && x[3] && x[6] 
+			|| x[1] && x[4] && x[7] 
+			|| x[2] && x[5] && x[8]) 
+		{
 			return true;
 
-		} else {
+		} else 
+		{
 			return false;
 		}
 	}
 
-	static void f1(boolean x, SimpleWindow w) {
+	static void f1(boolean x, SimpleWindow w) 
+	{
+//		in here we draw X or O depending on boolean x in area F1
 		if (x) {
 			// w.moveTo(100, 100);
 			DrawX(w, 0, 0);
@@ -245,8 +247,7 @@ public class SmallGame {
 		} else {
 //   w.moveTo(300, 300);
 //   w.writeText("O");
-			DrawO(w, 200, 200);	
-			
+			DrawO(w, 200, 200);
 
 		}
 
@@ -331,6 +332,7 @@ public class SmallGame {
 		w.lineTo(x + 190, y + 10);
 
 	}
+
 	private static void initialize(SimpleWindow w, boolean[] blockUesedArray, boolean[] Player1Array,
 			boolean[] Player2Array, int score1, int score2) {
 // initialize method make the shape # of an X/O game and write the players score in the corner 
@@ -354,17 +356,18 @@ public class SmallGame {
 		w.writeText(" Player Two score : " + score2);
 
 	}
-	//future update to reset the score
-		private static void ResetScore(int score1, int score2) {
-			score1 = score2 = 0;
-		}
 
-		private static boolean allTrue(boolean[] values) {
-			//test a boolean array to see it's filled with trues
-			for (boolean value : values) {
-				if (!value)
-					return false;
-			}
-			return true;
+	// future update to reset the score
+	private static void ResetScore(int score1, int score2) {
+		score1 = score2 = 0;
+	}
+
+	private static boolean allTrue(boolean[] values) {
+		// test a boolean array to see it's filled with trues
+		for (boolean value : values) {
+			if (!value)
+				return false;
 		}
+		return true;
+	}
 }
