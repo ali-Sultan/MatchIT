@@ -5,29 +5,31 @@ import java.util.Scanner;
 public class ThrowDice {
 	public static void main(String[] args) {
 
-		System.out.println("number of throws " + 1000);
+		System.out.println("how many side does the dice has?");
 //		System.out.println("what number should we test for ");
-//		Scanner scan = new Scanner(System.in);
-//		int x = scan.nextInt();
-//		double y = howFrequent(x);
-		double [] arr = new double[6];
-		arr = frequent();
-//		System.out.format("we've got %d's %f present out of 1000 trial", x, y);
+		Scanner scan = new Scanner(System.in);
+		int sides = scan.nextInt();
+		System.out.println("how many times would you like to test(we recommend 1000 times)");
+		int throwing = scan.nextInt();
+
+		double [] arr = new double[sides];
+		arr = frequent(sides,throwing);
 		System.out.print("we've got "+Arrays.toString(arr));
 
 	}
-	private static double [] frequent() {
-//		test and throw 6 numbers 1000 times optimal solution 
+	private static double [] frequent(int sides, int throwing) {
+//		test and throw 6 numbers 1000 times optemel solotion 
 
-		double[] arr = new double[6];
+		double[] arr = new double[sides];
 		Arrays.fill(arr, 0);
 		Random r = new Random();
-		for(int i =0;i<1000;i++) {
-		int rand = r.nextInt(6)+1;
+		for(int i =0;i<throwing;i++) {
+		int rand = r.nextInt(sides)+1;
 		arr[rand-1]++;
 		}
 		return arr;
 	}
+	
 	private static double []  howFrequentAll() {
 //		test and throw 6 numbers 1000 times
 		double[] arr = new double[6];
