@@ -11,18 +11,31 @@ public class ThrowDice {
 //		int x = scan.nextInt();
 //		double y = howFrequent(x);
 		double [] arr = new double[6];
-		arr = howFrequentAll();
+		arr = frequent();
 //		System.out.format("we've got %d's %f present out of 1000 trial", x, y);
 		System.out.print("we've got "+Arrays.toString(arr));
 
 	}
+	private static double [] frequent() {
+//		test and throw 6 numbers 1000 times optimal solution 
 
-	private static double []  howFrequentAll() {
 		double[] arr = new double[6];
 		Arrays.fill(arr, 0);
 		Random r = new Random();
 		for(int i =0;i<1000;i++) {
 		int rand = r.nextInt(6)+1;
+		arr[rand-1]++;
+		}
+		return arr;
+	}
+	private static double []  howFrequentAll() {
+//		test and throw 6 numbers 1000 times
+		double[] arr = new double[6];
+		Arrays.fill(arr, 0);
+		Random r = new Random();
+		for(int i =0;i<1000;i++) {
+		int rand = r.nextInt(6)+1;
+		arr[rand-1]++;
 	    switch(rand) {
        case 1:
         	arr[0]++;
@@ -56,8 +69,9 @@ public class ThrowDice {
 		return arr;
 
 	}
-
+	
 	private static double howFrequent(int x) {
+//		test one number
  		Random r = new Random();
 		int count = 0;
 		for(int i =0;i<1000;i++) {
